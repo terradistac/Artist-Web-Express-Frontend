@@ -24,7 +24,7 @@ module.exports = function (app, passport) {
     // app.post('/login', do all our passport stuff here);
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/profile', // redirect to the secure profile section
+        successRedirect: '/dashboard', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -60,6 +60,16 @@ module.exports = function (app, passport) {
         });
     });
     // =====================================
+    // Dashboard SECTION ===================
+    // =====================================
+    // we will want this protected so you have to be logged in to visit
+    // we will use route middleware to verify this (the isLoggedIn function)
+    app.get('/dashboard', isLoggedIn, function (req, res) {
+        res.render('dashboard.ejs', {
+            user: req.user // get the user out of session and pass to template
+        });
+    });
+    // =====================================
     // PROFILE EDIT SECTION ================
     // =====================================
     // we will want this protected so you have to be logged in to visit
@@ -90,6 +100,17 @@ module.exports = function (app, passport) {
     app.get('/profile/viewartwork', isLoggedIn, function (req, res){
         res.render('viewartwork.ejs', {
             user: req.user
+        })
+    });
+    // =====================================
+    // ARTWORK Edit SECTION ================
+    // =====================================
+    // we will want this protected so you have to be logged in to visit
+    // we will use route middleware to verify this (the isLoggedIn function)
+    app.get('/profile/editartwork', isLoggedIn, function (req, res){
+        res.render('editartwork.ejs', {
+            user: req.user,
+            success: req.query.success
         })
     });
     // =====================================

@@ -1,0 +1,160 @@
+<!-- views/editartwork.ejs -->
+<!doctype html>
+<html>
+
+<head>
+    <title>Artist Web</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <script>
+        $(document).ready(function () {
+            $.getJSON("http://localhost:8081/api/artwork/list/<%= user._id %>", function (data) {
+                var i = 0;
+                data.data.forEach(element => {
+                    var k = 0;
+                    var name = '<option id=' + element._id + '>' + element.artworkname +
+                        '</option>';
+                    $("#artselect").after(name);
+                    $("#" + element._id).click(function () {
+                        $("input").remove();
+                        $("button").remove(":contains('Delete')");
+                        $("button").remove(":contains('Edit')");
+                        $("button").remove(":contains('Add')");
+                        var tagAddition =
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<form method="post">' +
+                            '<input type="hidden" name="userid" value="<%= user._id %>">' +
+                            '<input type="hidden" name="artworkid" value="' + element._id +
+                            '">' +
+                            '<input type="text" class="form-control" name="tag">' +
+                            '</div>' +
+                            '<div class="col">' +
+                            '<button type="submit" formaction="http://localhost:8081/api/artwork/tags" class="btn btn-success btn-sm">Add Tag</button>' +
+                            '</div>' +
+                            '</div>' +
+                            '</form>';
+                        $("br").after(tagAddition);
+                        element.tags.forEach(each => {
+                            var tagEditor =
+                                '<div class="row">' +
+                                '<div class="col">' +
+                                '<form method="post">' +
+                                '<input type="hidden" name="userid" id="' + k +
+                                '" value="<%= user._id %>">' +
+                                '<input type="hidden" name="artworkid" value="' +
+                                element._id + '">' +
+                                '<input type="text" class="form-control" name="tag" value="' +
+                                each + '">' +
+                                '<input type="hidden" name="oldtag" value="' +
+                                each + '">' +
+                                '</div>' +
+                                '<div class="col-sm-2">' +
+                                '<button type="submit" formaction="http://localhost:8081/api/artwork/tags/delete" class="btn btn-danger btn-sm">Delete Tag</button>' +
+                                '</div>' +
+                                '<div class="col-sm-2">' +
+                                '<button type="submit" formaction="http://localhost:8081/api/artwork/tags/edit" class="btn btn-warning btn-sm">Edit Tag</button>' +
+                                '</div>' +
+                                '</div>' +
+                                '</form>';
+                            $("br").after(tagEditor);
+                            k++;
+                        })
+                        var nameEdit =
+                            '<div class="row">' +
+                            '<div class="col">' +
+                            '<form method="post">' +
+                            '<input type="hidden" name="userid" value="<%= user._id %>">' +
+                            '<input type="hidden" name="artworkid" value="' + element._id +
+                            '">' +
+                            '<input type="text" class="form-control" name="artworkname" value="' +
+                            element.artworkname + '">' +
+                            '</div>' +
+                            '<div class="col">' +
+                            '<button type="submit" formaction="http://localhost:8081/api/artwork/edit" class="btn btn-warning btn-sm">Edit Title</button>' +
+                            '</div>' +
+                            '</form>';
+                        $("br").after(nameEdit);
+                    })
+                    i++;
+                });
+            })
+        });
+    </script>
+    <style>
+        body {
+            padding-top: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand">Artist Web.</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Home
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Discover Artwork</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/profile">My profile</a>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+
+        <h1>
+            <span class="fas fa-edit"></span> Edit Artwork</h1>
+        <!-- show any messages that come back with submission -->
+        <% if (success) { %>
+            <div class="alert alert-success">Edit successful.</div>
+            <% } %>
+                <% if (success > 0 && !success) { %>
+                    <div class="alert alert-warning">Edit failed. Please try again.</div>
+                    <% } %>
+
+                        <!-- EDIT FORM -->
+                        <div class="container">
+                            <select class="custom-select">
+                                <option selected id="artselect">Select an Artwork to Edit</option>
+                            </select>
+                            <br>
+                        </div>
+
+                        <hr>
+
+                        <p>Go back to your
+                            <a href="/profile">profile</a>.</p>
+
+
+    </div>
+</body>
+
+</html>

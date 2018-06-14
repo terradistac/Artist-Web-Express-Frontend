@@ -4,6 +4,11 @@
 
 <head>
     <title>Artist Web</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
@@ -14,24 +19,66 @@
             word-wrap: break-word;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("http://localhost:8081/api/artwork/list/<%= user._id %>", function (data) {
+                data.data.forEach(element => {
+                    var img = "<img src =" + "http://localhost:8081/../" + element.artworkfilelocation +
+                        " class=img-thumbnail>";
+                    $("#artwork").append(img);
+                    $("#artwork").append("<br>");
+                    $("#artwork").append(element.artworkname);
+                    $("#artwork").append("<br>");
+                });
+            })
+        });
+    </script>
 </head>
 
 <body>
     <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand">Artist Web.</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="page-header text-center">
-            <h1>
-                <span class="fas fa-address-card"></span> Profile Page</h1>
-            <a href="/logout" class="btn btn-dark btn-sm">Logout</a>
-            <a href="/profile/submitartwork" class="btn btn-dark btn-sm">Submit Artwork</a>
-            <a href="/profile/viewartwork" class="btn btn-dark btn-sm">View Artwork</a>
-            <a href="/profile/editprofile" class="btn btn-dark btn-sm">Edit Profile</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Home
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Discover Artwork</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/profile">My profile</a>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <div class="page-header text-right">
+            <a href="/profile/submitartwork" class="btn btn-link btn-sm">Submit Artwork</a>
+            <a href="/profile/editartwork" class="btn btn-link btn-sm">Edit Artwork</a>
+            <a href="/profile/editprofile" class="btn btn-link btn-sm">Edit Profile</a>
         </div>
 
         <div class="row">
 
             <!-- LOCAL INFORMATION -->
-            <div class="col-sm-6">
+            <div class="col-sm-auto">
                 <div class="well">
                     <h3>
                         <span class="fa fa-user"></span> About Me</h3>
@@ -50,7 +97,8 @@
 
                 </div>
             </div>
-
+            <div class="col-lg-9" id="artwork">
+            </div>
         </div>
 
     </div>
