@@ -27,10 +27,22 @@
                         $("button").remove(":contains('Delete')");
                         $("button").remove(":contains('Edit')");
                         $("button").remove(":contains('Add')");
+                        var artDelete =
+                            '<form method="post">' +
+                            '<div class="row">' +
+                            '<input type="hidden" name="userid" value="<%= user._id %>">' +
+                            '<input type="hidden" name="artworkid" value="' + element._id +
+                            '">' +
+                            '<div class="col">' +
+                            '<button type="submit" formaction="http://localhost:8081/api/artwork/delete" class="btn btn-danger btn-lg">Delete Artwork</button>' +
+                            '</div>' +
+                            '</div>' +
+                            '</form>';
+                        $("br").after(artDelete);
                         var tagAddition =
+                            '<form method="post">' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<form method="post">' +
                             '<input type="hidden" name="userid" value="<%= user._id %>">' +
                             '<input type="hidden" name="artworkid" value="' + element._id +
                             '">' +
@@ -44,9 +56,9 @@
                         $("br").after(tagAddition);
                         element.tags.forEach(each => {
                             var tagEditor =
+                                '<form method="post">' +
                                 '<div class="row">' +
                                 '<div class="col">' +
-                                '<form method="post">' +
                                 '<input type="hidden" name="userid" id="' + k +
                                 '" value="<%= user._id %>">' +
                                 '<input type="hidden" name="artworkid" value="' +
@@ -68,9 +80,9 @@
                             k++;
                         })
                         var nameEdit =
+                            '<form method="post">' +
                             '<div class="row">' +
                             '<div class="col">' +
-                            '<form method="post">' +
                             '<input type="hidden" name="userid" value="<%= user._id %>">' +
                             '<input type="hidden" name="artworkid" value="' + element._id +
                             '">' +
@@ -79,6 +91,7 @@
                             '</div>' +
                             '<div class="col">' +
                             '<button type="submit" formaction="http://localhost:8081/api/artwork/edit" class="btn btn-warning btn-sm">Edit Title</button>' +
+                            '</div>' +
                             '</div>' +
                             '</form>';
                         $("br").after(nameEdit);
@@ -124,8 +137,8 @@
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" formmethod="GET" formaction="/search" type="submit">Search</button>
                 </form>
             </div>
         </nav>

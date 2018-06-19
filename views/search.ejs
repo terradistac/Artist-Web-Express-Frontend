@@ -21,14 +21,15 @@
     </style>
     <script>
         $(document).ready(function () {
-            $.getJSON("http://localhost:8081/api/artwork/list/<%= user._id %>", function (data) {
+            var urlParams = new URLSearchParams(window.location.search);
+            $.getJSON("http://localhost:8081/api/search/artists/" + urlParams.get('search'), function (data) {
                 data.data.forEach(element => {
-                    var img = "<img src =" + "http://localhost:8081/../" + element.artworkfilelocation +
-                        " class=img-thumbnail>";
-                    $("#artwork").append(img);
-                    $("#artwork").append("<br>");
-                    $("#artwork").append(element.artworkname);
-                    $("#artwork").append("<br>");
+                    var profileLink = "<a href=/search/profile/" + element._id + ">" + element.local
+                        .name + "</a>";
+                    $("#results").append(profileLink);
+                    $("#results").append("<br>");
+                    $("#results").append(element.local.biography);
+                    $("#results").append("<hr>");
                 });
             })
         });
@@ -69,37 +70,13 @@
                 </form>
             </div>
         </nav>
-        <div class="page-header text-right">
-            <a href="/profile/submitartwork" class="btn btn-link btn-sm">Submit Artwork</a>
-            <a href="/profile/editartwork" class="btn btn-link btn-sm">Edit Artwork</a>
-            <a href="/profile/editprofile" class="btn btn-link btn-sm">Edit Profile</a>
-        </div>
 
         <div class="row">
-
-            <!-- LOCAL INFORMATION -->
-            <div class="col-sm-auto">
-                <div class="well">
-                    <h3>
-                        <span class="fa fa-user"></span> About Me</h3>
-
-                    <p>
-                        <br>
-                        <strong>Email</strong>:
-                        <%= user.local.email %>
-                            <br>
-                            <strong>Name</strong>:
-                            <%= user.local.name %>
-                                <br>
-                                <strong>Biography</strong>:
-                                <%= user.local.biography %>
-                    </p>
-
-                </div>
-            </div>
-            <div class="col-lg-9" id="artwork">
+            <h1>Search Results</h1>
+            <div id="results" class="col-sm-auto">
             </div>
         </div>
+    </div>
 
     </div>
 </body>

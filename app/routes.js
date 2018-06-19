@@ -50,7 +50,7 @@ module.exports = function (app, passport) {
     }));
 
     // =====================================
-    // PROFILE SECTION =====================
+    // USER PROFILE SECTION ================
     // =====================================
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
@@ -112,6 +112,22 @@ module.exports = function (app, passport) {
             user: req.user,
             success: req.query.success
         })
+    });
+    // =====================================
+    // ARTIST Search SECTION ================
+    // =====================================
+    // we will want this protected so you have to be logged in to visit
+    // we will use route middleware to verify this (the isLoggedIn function)
+    app.get('/search', isLoggedIn, function (req, res) {
+        res.render('search.ejs');
+    });
+    // =====================================
+    // PROFILE SECTION =====================
+    // =====================================
+    app.get('/search/profile/:userid', function (req, res) {
+        res.render('searchprofile.ejs', {
+            user : req.params.userid
+        });
     });
     // =====================================
     // LOGOUT ==============================

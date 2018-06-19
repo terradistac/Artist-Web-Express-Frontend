@@ -21,14 +21,26 @@
     </style>
     <script>
         $(document).ready(function () {
-            $.getJSON("http://localhost:8081/api/artwork/list/<%= user._id %>", function (data) {
-                data.data.forEach(element => {
+            $.getJSON("http://localhost:8081/api/user/info/<%= user %>", function (data) {
+                var profileInfo = "<p>" +
+                    "<br>" +
+                    "<strong>Email</strong>: " +
+                    data.data.email +
+                    "<br>" +
+                    "<strong>Name</strong>: " +
+                    data.data.name +
+                    "<br>" +
+                    "<strong>Biography</strong>: " +
+                    data.data.biography +
+                    "</p>";
+                $("#profile").append(profileInfo);
+                data.data.art.forEach(element => {
                     var img = "<img src =" + "http://localhost:8081/../" + element.artworkfilelocation +
                         " class=img-thumbnail>";
-                    $("#artwork").append(img);
-                    $("#artwork").append("<br>");
-                    $("#artwork").append(element.artworkname);
-                    $("#artwork").append("<br>");
+                    $("#profile").append(img);
+                    $("#profile").append("<br>");
+                    $("#profile").append(element.artworkname);
+                    $("#profile").append("<br>");
                 });
             })
         });
@@ -69,35 +81,15 @@
                 </form>
             </div>
         </nav>
-        <div class="page-header text-right">
-            <a href="/profile/submitartwork" class="btn btn-link btn-sm">Submit Artwork</a>
-            <a href="/profile/editartwork" class="btn btn-link btn-sm">Edit Artwork</a>
-            <a href="/profile/editprofile" class="btn btn-link btn-sm">Edit Profile</a>
-        </div>
 
         <div class="row">
 
             <!-- LOCAL INFORMATION -->
             <div class="col-sm-auto">
-                <div class="well">
-                    <h3>
-                        <span class="fa fa-user"></span> About Me</h3>
-
-                    <p>
-                        <br>
-                        <strong>Email</strong>:
-                        <%= user.local.email %>
-                            <br>
-                            <strong>Name</strong>:
-                            <%= user.local.name %>
-                                <br>
-                                <strong>Biography</strong>:
-                                <%= user.local.biography %>
-                    </p>
-
-                </div>
             </div>
-            <div class="col-lg-9" id="artwork">
+            <div class="col-lg-9" id="profile">
+                <h3>
+                    <span class="fa fa-user"></span> About Me</h3>
             </div>
         </div>
 
