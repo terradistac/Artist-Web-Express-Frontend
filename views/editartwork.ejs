@@ -137,8 +137,16 @@
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" formmethod="GET" formaction="/search" type="submit">Search</button>
+                    <div class="input-group">
+                        <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search</button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item" formmethod="GET" formaction="/search" type="submit">Search Users</button>
+                                <button class="dropdown-item" formmethod="GET" formaction="#" type="submit">Search Art</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </nav>

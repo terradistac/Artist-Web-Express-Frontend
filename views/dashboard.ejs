@@ -22,40 +22,48 @@
 
 <body>
     <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand">Artist Web.</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-        
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/dashboard">Home
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Menu
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Discover Artwork</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/profile">My profile</a>
-                                    <a class="dropdown-item" href="/logout">Logout</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" formmethod="GET" formaction="/search" type="submit">Search</button>
-                        </form>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand">Artist Web.</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Home
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Discover Artwork</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/profile">My profile</a>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="input-group">
+                        <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search</button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item" formmethod="GET" formaction="/search" type="submit">Search Users</button>
+                                <button class="dropdown-item" formmethod="GET" formaction="#" type="submit">Search Art</button>
+                            </div>
+                        </div>
                     </div>
-                </nav>
-                <h1>
-                        <span class="far fa-smile"></span> My Dashboard</h1>
+                </form>
+            </div>
+        </nav>
+        <h1>
+            <span class="far fa-smile"></span> My Dashboard</h1>
         <div class="container">
             <p>Hello world.</p>
         </div>
